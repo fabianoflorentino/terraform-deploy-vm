@@ -7,8 +7,8 @@ pipeline {
 			steps {
 				script {
 					sh '/usr/local/bin/terraform init'
-					sh '/usr/local/bin/terraform plan'
-					sh '/usr/local/bin/terraform apply'
+					sh '/usr/local/bin/terraform plan -out deploy.tfplan'
+					sh '/usr/local/bin/terraform apply deploy.tfplan'
 				}
 			}
 		}		
