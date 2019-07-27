@@ -13,27 +13,17 @@ pipeline {
 		}
         stage ('Deploy New VM') {
             steps {
-				timeout(time: 3, unit: "MINUTES") {
-                    input(id: 'chooseOptions', message: 'Do you want to create?', ok: 'Confirm')
-                    script{
-                        if (${env.TF_STATE} == "APPLY"){
-                            sh '/usr/local/bin/terraform apply deploy.tfplan'
+                script {
+                   if ("${env.TF_STATE}" == "APPLY") {
+                        timeout(time: 3, unit: "MINUTES") {
+                            input(id: 'chooseOptions', message: 'Do you want to create?', ok: 'Confirm')
+                            script {
+                                sh '/usr/local/bin/terraform apply deploy.tfplan'
+                            }
                         }
-                    }
+                    } 
                 }
             }
-        }
-        stage ('Destroy Infraestructure') {
-            steps {
-				timeout(time: 3, unit: "MINUTES") {
-                    input(id: 'chooseOptions', message: 'Do you want to destroy?', ok: 'Confirm')
-                    script{
-                        if (${env.TF_STATE} == "DESTROY"){
-                            sh '/usr/local/bin/terraform apply deploy.tfplan'
-                        }
-                    }
-                }
-            }            
         }
 	}
 	post {
