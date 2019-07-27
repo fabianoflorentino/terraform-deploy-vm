@@ -25,6 +25,20 @@ pipeline {
                 }
             }
         }
+        stage ('Destroy New VM') {
+            steps {
+                script {
+                   if ("${env.TF_STATE}" == "DESTROY") {
+                        timeout(time: 3, unit: "MINUTES") {
+                            input(id: 'chooseOptions', message: 'Do you want to destroy?', ok: 'Confirm')
+                            script {
+                                sh '/usr/local/bin/terraform apply deploy.tfplan'
+                            }
+                        }
+                    } 
+                }
+            }
+        }
 	}
 	post {
         success {
