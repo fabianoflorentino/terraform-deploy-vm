@@ -32,7 +32,7 @@ pipeline {
                         timeout(time: 3, unit: "MINUTES") {
                             input(id: 'chooseOptions', message: 'Do you want to destroy?', ok: 'Confirm')
                             script {
-                                sh '/usr/local/bin/terraform destroy'
+                                sh '/usr/local/bin/terraform destroy -auto-approve'
                             }
                         }
                     } 
