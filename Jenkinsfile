@@ -14,7 +14,7 @@ pipeline {
         stage ('Deploy New VM') {
             steps {
 				timeout(time: 3, unit: "MINUTES") {
-                    notifySlack("Do you want to approve the deliver in production? ${env.BUILD_URL}")
+                    slackNotifier("Do you want to approve the deliver in production? ${env.BUILD_URL}")
                     input(id: 'chooseOptions', message: 'Do you want to approve the deliver in production?', ok: 'Confirm')
                     script{
                         sh '/usr/local/bin/terraform apply deploy.tfplan'
