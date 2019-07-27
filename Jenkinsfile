@@ -6,9 +6,9 @@ pipeline {
 		stage('Deploy VM') {
 			steps {
 				script {
-					sh 'terraform init'
-					sh 'terraform plan'
-					sh 'terraform apply'
+					sh '/usr/local/bin/terraform init'
+					sh '/usr/local/bin/terraform plan'
+					sh '/usr/local/bin/terraform apply'
 				}
 			}
 		}		
