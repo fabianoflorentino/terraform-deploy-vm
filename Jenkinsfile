@@ -5,13 +5,12 @@ pipeline {
 	stages {
 		stage('Deploy VM') {
       steps {
-
-				sh '
-					terraform init
-          terraform plan
-          terraform apply
-        '
-			}
+      	scripts {
+	  sh 'terraform init'
+	  sh 'terraform plan'
+	  sh 'terraform apply'
+     	}
+      }
     }
   }
 	post {
