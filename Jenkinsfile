@@ -3,7 +3,7 @@ pipeline {
 		any 
 	}
 	stages {
-		stage {
+		stage('Deploy VM') {
 			steps {
 				script {
 					sh 'terraform init'
