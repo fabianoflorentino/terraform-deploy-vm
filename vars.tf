@@ -25,19 +25,15 @@ variable "custom_iso_path" {
 }
 variable "name_new_vm" {
   description = "Input a name for Virtual Machine Ex. new_vm"
-  default     = ${params.name_vm}
 }
 variable "vm_count" {
   description = "Number of instaces"
-  default     = ${params.number_of_machines}
 }
 
 variable "num_cpus" {
   description = "Amount of vCPU's"
-  default     = ${params.cpu}
 }
 
 variable "num_mem" {
   description = "Amount of Memory"
-  default     = ${params.memory}
 }
