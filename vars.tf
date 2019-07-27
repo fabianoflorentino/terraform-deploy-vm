@@ -29,7 +29,7 @@ variable "name_new_vm" {
 }
 variable "vm_count" {
   description = "Number of instaces"
-  default     = "3"
+  default     = "1"
 }
 
 variable "num_cpus" {
@@ -39,5 +39,5 @@ variable "num_cpus" {
 
 variable "num_mem" {
   description = "Amount of Memory"
-  default     = "1024"
+  default     = "512"
 }
