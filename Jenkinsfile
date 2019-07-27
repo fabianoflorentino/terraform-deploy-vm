@@ -3,15 +3,24 @@ pipeline {
         any {} 
 	}
 	stages {
-		stage('Deploy VM') {
+		stage('Bootstrap Terraform') {
 			steps {
 				script {
 					sh '/usr/local/bin/terraform init'
 					sh '/usr/local/bin/terraform plan -out deploy.tfplan'
-					sh '/usr/local/bin/terraform apply deploy.tfplan'
 				}
 			}
-		}		
+		}
+        stage ('Deploy New VM') {
+            steps {
+				timeout(time: 3, unit: "MINUTES") {
+                    input(id: 'chooseOptions', message: 'Do you want to approve the deliver in production?', ok: 'Confirm')
+                    script{
+                        sh '/usr/local/bin/terraform apply deploy.tfplan'
+                    }
+                }
+            }
+        }
 	}
 	post {
         success {
