@@ -65,7 +65,7 @@ pipeline {
 				}
 			}
 		}
-        stage ('Deploy New VM') {
+        stage ('Deploy VM') {
             steps {
                 script {
                    if ("${env.TF_STATE}" == "APPLY") {
@@ -79,7 +79,7 @@ pipeline {
                 }
             }
         }
-        stage ('Destroy New VM') {
+        stage ('Destroy VM') {
             steps {
                 script {
                    if ("${env.TF_STATE}" == "DESTROY") {
