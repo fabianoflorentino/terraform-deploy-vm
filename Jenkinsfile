@@ -18,7 +18,7 @@ pipeline {
         stage ('Configure connect for access provider') {
             steps {
                 script {
-                    tfProvider = """
+                    tfProvider = """# Managed by Jenkins
 provider "${env.PROVIDER}" {
     vsphere_server       = "${env.PROVIDER_SRV}"
     user                 = "${env.PROVIDER_USR}"
@@ -33,7 +33,7 @@ provider "${env.PROVIDER}" {
         stage ('Configuration to instances') {
             steps {
                 script {
-                    tfVms = """
+                    tfVms = """# Managed by Jenkins
 variable "name_new_vm" {
     description = "Input a name for Virtual Machine Ex. new_vm"
     default     = "${def_name_new_vm}"
