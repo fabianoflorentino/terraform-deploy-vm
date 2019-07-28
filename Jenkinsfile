@@ -1,15 +1,3 @@
-// provider.tf
-/**def def_provider     = "${env.PROVIDER}"
-def def_provider_srv = "${env.PROVIDER_SRV}"
-def def_user         = "${env.PROVIDER_USR}"
-def def_password     = "${env.PROVIDER_PSW}"
-
-// vms.tf
-def def_name_new_vm = "${env.NAME_NEW_VM}"
-def def_vm_count    = "${env.VM_COUNT}"
-def def_num_cpus    = "${env.NUM_CPUS}"
-def def_num_mem     = "${env.NUM_MEM}"**/
-
 pipeline {
 	agent { 
         any {} 
