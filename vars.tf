@@ -23,21 +23,3 @@ variable "guest_id" {
 variable "custom_iso_path" {
   default = "iso_images/custom-centos7-v7.iso"
 }
-variable "name_new_vm" {
-  description = "Input a name for Virtual Machine Ex. new_vm"
-  default     = "vm"
-}
-variable "vm_count" {
-  description = "Number of instaces"
-  default     = "1"
-}
-
-variable "num_cpus" {
-  description = "Amount of vCPU's"
-  default     = "2"
-}
-
-variable "num_mem" {
-  description = "Amount of Memory"
-  default     = "512"
-}
