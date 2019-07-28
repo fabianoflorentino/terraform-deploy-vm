@@ -1,18 +1,39 @@
+// provider.tf
+def def_provider     = "${env.PROVIDER}"
+def def_provider_srv = "${env.PROVIDER_SRV}"
+def def_user         = "${env.PROVIDER_USR}"
+def def_password     = "${env.PROVIDER_PSW}"
+
+// vms.tf
 def def_name_new_vm = "${env.NAME_NEW_VM}"
 def def_vm_count    = "${env.VM_COUNT}"
 def def_num_cpus    = "${env.NUM_CPUS}"
 def def_num_mem     = "${env.NUM_MEM}"
-def tfCodeFilePath  = "./vms.tf"
 
 pipeline {
 	agent { 
         any {} 
 	}
 	stages {
-        stage ('Write Custom .tf') {
+        stage ('Configure connect for access provider') {
             steps {
                 script {
-                    tfCode = """
+                    tfProvider = """
+                        provider "${env.PROVIDER}" {
+                            vsphere_server       = "${env.PROVIDER_SRV}"
+                            user                 = "${env.PROVIDER_USR}"
+                            password             = "${env.PROVIDER_PSW}"
+                            allow_unverified_ssl = true
+                        }
+                    """
+                }
+                writeFile file: "./provider.tf", text: tfProvider
+            }
+        } 
+        stage ('Configuration to instances') {
+            steps {
+                script {
+                    tfVms = """
                         variable "name_new_vm" {
                             description = "Input a name for Virtual Machine Ex. new_vm"
                             default     = "${def_name_new_vm}"
@@ -33,7 +54,7 @@ pipeline {
                         }
                     """
                 }
-                writeFile file: tfCodeFilePath, text: tfCode
+                writeFile file: "./vms.tf", text: tfVms
             }
         } 
 		stage ('Bootstrap Terraform') {
