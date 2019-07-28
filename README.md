@@ -2,7 +2,10 @@
 
 - **Requeriments:**  
   - **Jenkins**
+    - **Plugin:** 
+      - Slack Notification Plugin
   - **Job**
+    - **Type:** Pipeline
 
 ## **Job**
 
