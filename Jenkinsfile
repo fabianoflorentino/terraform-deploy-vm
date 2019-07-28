@@ -19,13 +19,13 @@ pipeline {
             steps {
                 script {
                     tfProvider = """
-                        provider "${env.PROVIDER}" {
-                            vsphere_server       = "${env.PROVIDER_SRV}"
-                            user                 = "${env.PROVIDER_USR}"
-                            password             = "${env.PROVIDER_PSW}"
-                            allow_unverified_ssl = true
-                        }
-                    """
+provider "${env.PROVIDER}" {
+    vsphere_server       = "${env.PROVIDER_SRV}"
+    user                 = "${env.PROVIDER_USR}"
+    password             = "${env.PROVIDER_PSW}"
+    allow_unverified_ssl = true
+}
+"""
                 }
                 writeFile file: "./provider.tf", text: tfProvider
             }
@@ -34,25 +34,25 @@ pipeline {
             steps {
                 script {
                     tfVms = """
-                        variable "name_new_vm" {
-                            description = "Input a name for Virtual Machine Ex. new_vm"
-                            default     = "${def_name_new_vm}"
-                        }
-                        variable "vm_count" {
-                            description = "Number of instaces"
-                            default     = "${def_vm_count}"
-                        }
+variable "name_new_vm" {
+    description = "Input a name for Virtual Machine Ex. new_vm"
+    default     = "${def_name_new_vm}"
+}
+variable "vm_count" {
+    description = "Number of instaces"
+    default     = "${def_vm_count}"
+}
 
-                        variable "num_cpus" {
-                            description = "Amount of vCPU's"
-                            default     = "${def_num_cpus}"
-                        }
+variable "num_cpus" {
+    description = "Amount of vCPU's"
+    default     = "${def_num_cpus}"
+}
 
-                        variable "num_mem" {
-                            description = "Amount of Memory"
-                            default     = "${def_num_mem}"
-                        }
-                    """
+variable "num_mem" {
+    description = "Amount of Memory"
+    default     = "${def_num_mem}"
+}
+"""
                 }
                 writeFile file: "./vms.tf", text: tfVms
             }
