@@ -29,7 +29,7 @@ variable "name_new_vm" {
 }
 variable "vm_count" {
   description = "Number of instaces"
-  default     = "${env.NUM_VMS}"
+  default     = "1"
 }
 
 variable "num_cpus" {
