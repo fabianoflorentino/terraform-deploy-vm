@@ -40,6 +40,10 @@ pipeline {
                             description = "Amount of Memory"
                             default     = "${env.NUM_MEM}"
                         }
+                        variable "size_disk" {
+                            description = "Amount of Disk"
+                            default     = "${env.SIZE_DISK}"
+                        }
                     """
                 }
                 writeFile file: "./vms.tf", text: tfVms.trim()
