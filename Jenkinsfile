@@ -1,6 +1,6 @@
 pipeline {
-	agent {
-        any {}
+	agent { 
+        any {} 
 	}
 	stages {
         stage ('Configure connect for access provider') {
@@ -17,7 +17,7 @@ pipeline {
                 }
                 writeFile file: "./provider.tf", text: tfProvider.trim()
             }
-        }
+        } 
         stage ('Configuration to instances') {
             steps {
                 script {
@@ -48,12 +48,12 @@ pipeline {
                 }
                 writeFile file: "./vms.tf", text: tfVms.trim()
             }
-        }
+        } 
 		stage ('Bootstrap Terraform') {
 			steps {
 				script {
-					sh '/var/jenkins_home/extras/terraform init'
-					sh '/var/jenkins_home/extras/terraform plan -out deploy.tfplan'
+					sh '/usr/local/bin/terraform init'
+					sh '/usr/local/bin/terraform plan -out deploy.tfplan'
 				}
 			}
 		}
@@ -64,10 +64,10 @@ pipeline {
                         timeout(time: 3, unit: "MINUTES") {
                             input(id: 'chooseOptions', message: 'Do you want to create?', ok: 'Confirm')
                             script {
-                                sh '/var/jenkins_home/extras/terraform apply deploy.tfplan'
+                                sh '/usr/local/bin/terraform apply deploy.tfplan'
                             }
                         }
-                    }
+                    } 
                 }
             }
         }
@@ -78,10 +78,10 @@ pipeline {
                         timeout(time: 3, unit: "MINUTES") {
                             input(id: 'chooseOptions', message: 'Do you want to destroy?', ok: 'Confirm')
                             script {
-                                sh '/var/jenkins_home/extras/terraform destroy -auto-approve'
+                                sh '/usr/local/bin/terraform destroy -auto-approve'
                             }
                         }
-                    }
+                    } 
                 }
             }
         }
@@ -89,13 +89,13 @@ pipeline {
 	post {
         success {
           slackSend (
-              color: '#088A29',
+              color: '#088A29', 
               message: ":white_check_mark: SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
         }
 
         failure {
           slackSend (
-              color: '#DF0101',
+              color: '#DF0101', 
               message: ":rotating_light: FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
         }
     }
