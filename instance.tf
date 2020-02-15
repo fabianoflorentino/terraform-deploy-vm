@@ -16,32 +16,6 @@ data "vsphere_network" "networking" {
 }
 
 resource "vsphere_virtual_machine" "virtualmachine" {
-<<<<<<< HEAD
-  count                      = var.vm_count
-  name                       = "${var.name_new_vm}-${count.index + 1}"
-  resource_pool_id           = data.vsphere_resource_pool.pool.id
-  datastore_id               = data.vsphere_datastore.datastore.id
-  force_power_off            = true
-  shutdown_wait_timeout      = 1
-  num_cpus                   = var.num_cpus
-  memory                     = var.num_mem
-  wait_for_guest_net_timeout = 0
-  guest_id                   = var.guest_id
-  nested_hv_enabled          = true
-  network_interface {
-    network_id   = data.vsphere_network.networking.id
-    adapter_type = var.net_adapter_type
-  }
-  cdrom {
-    datastore_id = data.vsphere_datastore.datastore.id
-    path         = var.custom_iso_path
-  }
-  disk {
-    size             = var.size_disk
-    label            = "first-disk.vmdk"
-    thin_provisioned = true
-  }
-=======
     count                      = "${var.vm_count}"
     name                       = "${var.name_new_vm}-${count.index + 1}"
     resource_pool_id           = "${data.vsphere_resource_pool.pool.id}"
@@ -67,5 +41,4 @@ resource "vsphere_virtual_machine" "virtualmachine" {
         eagerly_scrub    = false
         thin_provisioned = true
     }
->>>>>>> parent of 148ba07... atualizando codigo para a versão 0.12
 }
