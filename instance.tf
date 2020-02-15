@@ -39,7 +39,6 @@ resource "vsphere_virtual_machine" "virtualmachine" {
   disk {
     size             = var.size_disk
     label            = "first-disk.vmdk"
-    eagerly_scrub    = false
     thin_provisioned = true
   }
 }
