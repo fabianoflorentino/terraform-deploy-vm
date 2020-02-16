@@ -1,19 +1,6 @@
-#
-# Variables with default values, alter according to the your environment.
-#
-
 variable "provider_address" {
-  default = "$TF_VAR_provider_address"
+  default = "192.168.7.3"
 }
-
-variable "provider_user" {
-  default = "$TF_VAR_provider_user"
-}
-
-variable "provider_password" {
-  default = "$TF_VAR_provider_password"
-}
-
 
 variable "data_center" {
   default = "ha-datacenter"
@@ -36,6 +23,18 @@ variable "guest_id" {
 }
 variable "custom_iso_path" {
   default = "iso/centos7-custom-img-disk50gb-v0.0.1.iso"
+}
+
+variable "label_disk" {
+  default =  "first-disk.vmdk"
+}
+
+variable "provider_user" {
+  default = "$TF_VAR_provider_user"
+}
+
+variable "provider_password" {
+  default = "$TF_VAR_provider_password"
 }
 
 variable "name_new_vm" {
