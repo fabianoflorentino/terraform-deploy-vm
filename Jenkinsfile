@@ -42,7 +42,8 @@ pipeline {
                         timeout(time: 3, unit: "MINUTES") {
                             input(id: 'chooseOptions', message: 'Destruir a maquina virtual?', ok: 'Confirmar')
                             script {
-                                sh "export TF_VAR_name_new_vm=${env.NAME_NEW_VM} \
+                                sh "export TF_VAR_provider_address=${env.PROVIDER_SRV} \
+                                && export TF_VAR_name_new_vm=${env.NAME_NEW_VM} \
                                 && export TF_VAR_vm_count=${env.VM_COUNT} \
                                 && export TF_VAR_num_cpus=${env.NUM_CPUS} \
                                 && export TF_VAR_num_mem=${env.NUM_MEM} \
