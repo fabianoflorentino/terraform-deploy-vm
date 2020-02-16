@@ -3,55 +3,17 @@ pipeline {
         any {}
 	}
 	stages {
-        stage ('Configure connect for access provider') {
-            steps {
-                script {
-                    tfProvider = """
-# Managed by Jenkins
-provider "${env.PROVIDER}" {
-    vsphere_server       = "${env.PROVIDER_SRV}"
-    user                 = "${env.PROVIDER_USR}"
-    password             = "${env.PROVIDER_PSW}"
-    allow_unverified_ssl = true
-    version              = "1.15.0"
-}
-"""
-                }
-                writeFile file: "./provider.tf", text: tfProvider.trim()
-            }
-        }
-        stage ('Configuration to instances') {
-            steps {
-                script {
-                    tfVms = """
-# Managed by Jenkins
-variable "name_new_vm" {
-    description = "Input a name for Virtual Machine Ex. new_vm"
-    default     = "${env.NAME_NEW_VM}"
-}
-variable "vm_count" {
-    description = "Number of instaces"
-    default     = "${env.VM_COUNT}"
-}
-
-variable "num_cpus" {
-    description = "Amount of vCPU's"
-    default     = "${env.NUM_CPUS}"
-}
-
-variable "num_mem" {
-    description = "Amount of Memory"
-    default     = "${env.NUM_MEM}"
-}
-"""
-                }
-                writeFile file: "./vms.tf", text: tfVms.trim()
-            }
-        }
 		stage ('Bootstrap Terraform') {
 			steps {
 				script {
-                    sh "export TF_VAR_size_disk=${env.SIZE_DISK} \
+                    sh "export TF_VAR_provider_address=${env.PROVIDER_SRV} \
+                    && export TF_VAR_provider_user=${env.PROVIDER_USR} \
+                    && export TF_VAR_provider_password=${env.PROVIDER_PSW} \
+                    && export TF_VAR_name_new_vm=${env.NAME_NEW_VM} \
+                    && export TF_VAR_vm_count=${env.VM_COUNT} \
+                    && export TF_VAR_num_cpus=${env.NUM_CPUS} \
+                    && export TF_VAR_num_mem=${env.NUM_MEM} \
+                    && export TF_VAR_size_disk=${env.SIZE_DISK} \
                     && /var/jenkins_home/extras/terraform init \
 					&& /var/jenkins_home/extras/terraform plan -out deploy.tfplan"
 				}
@@ -62,7 +24,7 @@ variable "num_mem" {
                 script {
                    if ("${env.TF_STATE}" == "APPLY") {
                         timeout(time: 3, unit: "MINUTES") {
-                            input(id: 'chooseOptions', message: 'Do you want to create?', ok: 'Confirm')
+                            input(id: 'chooseOptions', message: 'Criar a maquina virtual?', ok: 'Confirmar')
                             script {
                                 sh '/var/jenkins_home/extras/terraform apply deploy.tfplan'
                             }
@@ -76,7 +38,7 @@ variable "num_mem" {
                 script {
                    if ("${env.TF_STATE}" == "DESTROY") {
                         timeout(time: 3, unit: "MINUTES") {
-                            input(id: 'chooseOptions', message: 'Do you want to destroy?', ok: 'Confirm')
+                            input(id: 'chooseOptions', message: 'Destruir a maquina virtual?', ok: 'Confirmar')
                             script {
                                 sh '/var/jenkins_home/extras/terraform destroy -auto-approve'
                             }
