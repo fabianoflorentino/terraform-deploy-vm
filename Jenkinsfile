@@ -57,8 +57,8 @@ variable "size_disk" {
 				script {
                     sh "export TF_VAR_size_disk=${env.SIZE_DISK} \
                     && echo \$TF_VAR_size_disk \
-                    && /var/jenkins_home/extras/terraform init"
-					sh '/var/jenkins_home/extras/terraform plan -out deploy.tfplan'
+                    && /var/jenkins_home/extras/terraform init \
+					&& /var/jenkins_home/extras/terraform plan -out deploy.tfplan"
 				}
 			}
 		}
