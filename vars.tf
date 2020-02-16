@@ -23,3 +23,7 @@ variable "guest_id" {
 variable "custom_iso_path" {
   default = "iso/centos7-custom-img-disk50gb-v0.0.1.iso"
 }
+
+variable "size_disk" {
+  default = "$TF_VAR_size_disk"
+}
