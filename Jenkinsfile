@@ -62,6 +62,7 @@ variable "size_disk" {
 		stage ('Bootstrap Terraform') {
 			steps {
 				script {
+                    sh 'echo \$TF_VAR_size_disk'
 					sh '/var/jenkins_home/extras/terraform init'
 					sh '/var/jenkins_home/extras/terraform plan -out deploy.tfplan'
 				}
