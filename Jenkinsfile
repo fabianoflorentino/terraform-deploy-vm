@@ -23,6 +23,7 @@ provider "${env.PROVIDER}" {
         stage ('Configuration to instances') {
             steps {
                 script {
+                    sh "export TF_VAR_size_disk=${env.SIZE_DISK}"
                     tfVms = """
 # Managed by Jenkins
 variable "name_new_vm" {
@@ -56,7 +57,6 @@ variable "size_disk" {
 			steps {
 				script {
 					sh '/var/jenkins_home/extras/terraform init'
-                    sh "export TF_VAR_size_disk=${env.SIZE_DISK}"
 					sh '/var/jenkins_home/extras/terraform plan -out deploy.tfplan'
 				}
 			}
