@@ -43,6 +43,10 @@ variable "num_mem" {
     description = "Amount of Memory"
     default     = "${env.NUM_MEM}"
 }
+
+variable "size_disk" {
+  default = "$TF_VAR_size_disk"
+}
 """
                 }
                 writeFile file: "./vms.tf", text: tfVms.trim()
