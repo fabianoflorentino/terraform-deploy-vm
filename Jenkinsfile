@@ -3,6 +3,13 @@ pipeline {
         any {}
 	}
 	stages {
+        stage ('Configurando variaveis') {
+            steps {
+                script {
+                    sh "export TF_VAR_size_disk=${env.SIZE_DISK}"
+                }
+            }
+        }
         stage ('Configure connect for access provider') {
             steps {
                 script {
@@ -23,7 +30,6 @@ provider "${env.PROVIDER}" {
         stage ('Configuration to instances') {
             steps {
                 script {
-                    sh "export TF_VAR_size_disk=${env.SIZE_DISK}"
                     tfVms = """
 # Managed by Jenkins
 variable "name_new_vm" {
