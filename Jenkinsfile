@@ -3,13 +3,6 @@ pipeline {
         any {}
 	}
 	stages {
-        stage ('Configurando variaveis') {
-            steps {
-                script {
-                    sh "export TF_VAR_size_disk=${env.SIZE_DISK}"
-                }
-            }
-        }
         stage ('Configure connect for access provider') {
             steps {
                 script {
@@ -62,6 +55,7 @@ variable "size_disk" {
 		stage ('Bootstrap Terraform') {
 			steps {
 				script {
+                    sh "export TF_VAR_size_disk=${env.SIZE_DISK}"
                     sh 'echo \$TF_VAR_size_disk'
 					sh '/var/jenkins_home/extras/terraform init'
 					sh '/var/jenkins_home/extras/terraform plan -out deploy.tfplan'
