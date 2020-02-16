@@ -12,6 +12,7 @@ pipeline {
                             user                 = "${env.PROVIDER_USR}"
                             password             = "${env.PROVIDER_PSW}"
                             allow_unverified_ssl = true
+                            version = "1.15.0"
                         }
                     """
                 }
