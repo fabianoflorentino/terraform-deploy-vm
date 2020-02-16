@@ -51,7 +51,6 @@ pipeline {
                                     && export TF_VAR_num_cpus=${env.NUM_CPUS} \
                                     && export TF_VAR_num_mem=${env.NUM_MEM} \
                                     && export TF_VAR_size_disk=${env.SIZE_DISK} \
-                                    && /var/jenkins_home/extras/terraform init \
                 					&& /var/jenkins_home/extras/terraform destroy -auto-approve"
                                 }
                             }
