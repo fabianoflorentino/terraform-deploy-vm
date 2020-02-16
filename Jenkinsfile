@@ -43,10 +43,6 @@ variable "num_mem" {
     description = "Amount of Memory"
     default     = "${env.NUM_MEM}"
 }
-variable "size_disk" {
-    description = "Amount of Disk"
-    default     = "${env.SIZE_DISK}"
-}
 """
                 }
                 writeFile file: "./vms.tf", text: tfVms.trim()
@@ -56,6 +52,7 @@ variable "size_disk" {
 			steps {
 				script {
 					sh '/var/jenkins_home/extras/terraform init'
+                    sh "export TF_VAR_size_disk=${env.SIZE_DISK}"
 					sh '/var/jenkins_home/extras/terraform plan -out deploy.tfplan'
 				}
 			}
