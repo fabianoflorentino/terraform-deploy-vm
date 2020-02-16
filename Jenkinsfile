@@ -45,7 +45,7 @@ variable "num_mem" {
 }
 
 variable "size_disk" {
-  default = "$TF_VAR_size_disk"
+  default = "${TF_VAR_size_disk}"
 }
 """
                 }
