@@ -6,15 +6,16 @@ pipeline {
         stage ('Configure connect for access provider') {
             steps {
                 script {
-                    tfProvider = """# Managed by Jenkins
-                        provider "${env.PROVIDER}" {
-                            vsphere_server       = "${env.PROVIDER_SRV}"
-                            user                 = "${env.PROVIDER_USR}"
-                            password             = "${env.PROVIDER_PSW}"
-                            allow_unverified_ssl = true
-                            version              = "1.15.0"
-                        }
-                    """
+                    tfProvider = """
+# Managed by Jenkins
+provider "${env.PROVIDER}" {
+    vsphere_server       = "${env.PROVIDER_SRV}"
+    user                 = "${env.PROVIDER_USR}"
+    password             = "${env.PROVIDER_PSW}"
+    allow_unverified_ssl = true
+    version              = "1.15.0"
+}
+"""
                 }
                 writeFile file: "./provider.tf", text: tfProvider.trim()
             }
@@ -22,30 +23,31 @@ pipeline {
         stage ('Configuration to instances') {
             steps {
                 script {
-                    tfVms = """# Managed by Jenkins
-                        variable "name_new_vm" {
-                            description = "Input a name for Virtual Machine Ex. new_vm"
-                            default     = "${env.NAME_NEW_VM}"
-                        }
-                        variable "vm_count" {
-                            description = "Number of instaces"
-                            default     = "${env.VM_COUNT}"
-                        }
+                    tfVms = """
+# Managed by Jenkins
+variable "name_new_vm" {
+    description = "Input a name for Virtual Machine Ex. new_vm"
+    default     = "${env.NAME_NEW_VM}"
+}
+variable "vm_count" {
+    description = "Number of instaces"
+    default     = "${env.VM_COUNT}"
+}
 
-                        variable "num_cpus" {
-                            description = "Amount of vCPU's"
-                            default     = "${env.NUM_CPUS}"
-                        }
+variable "num_cpus" {
+    description = "Amount of vCPU's"
+    default     = "${env.NUM_CPUS}"
+}
 
-                        variable "num_mem" {
-                            description = "Amount of Memory"
-                            default     = "${env.NUM_MEM}"
-                        }
-                        variable "size_disk" {
-                            description = "Amount of Disk"
-                            default     = "${env.SIZE_DISK}"
-                        }
-                    """
+variable "num_mem" {
+    description = "Amount of Memory"
+    default     = "${env.NUM_MEM}"
+}
+variable "size_disk" {
+    description = "Amount of Disk"
+    default     = "${env.SIZE_DISK}"
+}
+"""
                 }
                 writeFile file: "./vms.tf", text: tfVms.trim()
             }
